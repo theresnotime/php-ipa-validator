@@ -1,0 +1,50 @@
+{
+    "name": "theresnotime/ipa-validator",
+    "description": "Composer package for validating and normalizing IPA",
+    "type": "library",
+    "license": "MIT",
+    "minimum-stability": "stable",
+    "support": {
+        "issues": "https://github.com/theresnotime/php-ipa-validator/issues"
+    },
+    "autoload": {
+        "psr-4": {
+            "TheresNoTime\\IPAValidator\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "TheresNoTime",
+            "email": "sam@theresnotime.co.uk"
+        }
+    ],
+    "require-dev": {
+        "mediawiki/mediawiki-codesniffer": "39.0.0",
+		"mediawiki/minus-x": "1.1.1",
+		"mediawiki/mediawiki-phan-config": "0.11.1",
+		"php-parallel-lint/php-console-highlighter": "1.0.0",
+		"php-parallel-lint/php-parallel-lint": "1.3.2",
+        "phpunit/phpunit": "^9.5"
+    },
+    "scripts": {
+		"test": [
+			"parallel-lint . --exclude vendor --exclude node_modules",
+			"@phpcs",
+			"minus-x check ."
+		],
+		"fix": [
+			"minus-x fix .",
+			"phpcbf"
+		],
+        "full-test": [
+            "parallel-lint . --exclude vendor --exclude node_modules",
+			"@phpcs",
+			"minus-x check .",
+            "@phpunit",
+            "@phan"
+        ],
+		"phan": "./vendor/bin/phan -d . --long-progress-bar",
+		"phpcs": "./vendor/bin/phpcs -sp --cache",
+        "phpunit": "./vendor/bin/phpunit --colors=always -c phpunit.xml"
+	}
+}
