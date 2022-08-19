@@ -40,8 +40,7 @@
             "parallel-lint . --exclude vendor --exclude node_modules",
 			"@phpcs",
 			"minus-x check .",
-            "@phpunit",
-            "@phan"
+            "@phpunit"
         ],
 		"phan": "./vendor/bin/phan -d . --long-progress-bar",
 		"phpcs": "./vendor/bin/phpcs -sp --cache",

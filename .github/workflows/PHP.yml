@@ -33,4 +33,6 @@ jobs:
       run: composer install --prefer-dist --no-progress
 
     - name: Run test suite
-      run: composer full-test
+      run: |
+        composer full-test
+        php ./vendor/bin/phan -d . --long-progress-bar --allow-polyfill-parser
