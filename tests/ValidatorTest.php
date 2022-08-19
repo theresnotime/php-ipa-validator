@@ -19,9 +19,7 @@ final class ValidatorTest extends TestCase {
 	 * @covers TheresNoTime\IPAValidator\Validator::validate
 	 */
 	public function testValidation(): void {
-		$this->assertTrue(
-						( new Validator( '/pʰə̥ˈkj̊uːliɚ/', true, true, true ) )->valid
-		);
+		$this->assertTrue( ( new Validator( '/pʰə̥ˈkj̊uːliɚ/', true, true, true ) )->valid );
 	}
 
 	/**
