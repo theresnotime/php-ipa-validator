@@ -10,12 +10,23 @@ permissions:
   contents: read
 
 jobs:
-  build:
+  PHP:
     name: PHP
     runs-on: ubuntu-latest
-
+    strategy:
+      matrix:
+        php-versions: ['7.4', '8.0']
     steps:
     - uses: actions/checkout@v3
+
+    - name: Setup PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: ${{ matrix.php-versions }}
+        extensions: mbstring, intl
+        ini-values: post_max_size=256M, max_execution_time=180
+        coverage: xdebug
+        tools: php-cs-fixer, phpunit, composer
 
     - name: Validate composer.json and composer.lock
       run: composer validate --strict
@@ -30,7 +41,7 @@ jobs:
           ${{ runner.os }}-php-
 
     - name: Install dependencies
-      run: composer install --prefer-dist --no-progress
+      run: composer update --prefer-dist --no-progress
 
     - name: Run test suite
       run: |
