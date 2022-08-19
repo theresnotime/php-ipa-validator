@@ -11,7 +11,7 @@ final class ValidatorTest extends TestCase {
 	public function testCanBeCreatedFromIPA(): void {
 		$this->assertInstanceOf(
 			Validator::class,
-			new Validator( '/pʰə̥ˈkj̊uːliɚ/', true, true, true )
+			new Validator( '/pʰə̥ˈkj̊uːliɚ/' )
 		);
 	}
 
@@ -33,6 +33,24 @@ final class ValidatorTest extends TestCase {
 	}
 
 	/**
+	 * @covers TheresNoTime\IPAValidator\Validator::validate
+	 */
+	public function testException(): void {
+		$this->expectException( Exception::class );
+		( new Validator( '/pʰə̥ˈkj̊uːliɚ/', false, false, true ) )->normalizedIPA;
+	}
+
+	/**
+	 * @covers TheresNoTime\IPAValidator\Validator::stripIPA
+	 */
+	public function testStripIPA(): void {
+		$this->assertEquals(
+			'pʰə̥ˈkj̊uːliɚ',
+			( new Validator( '/pʰə̥ˈkj̊uːliɚ/', true ) )->normalizedIPA
+		);
+	}
+
+	/**
 	 * @covers TheresNoTime\IPAValidator\Validator
 	 */
 	public function testOriginalIPA(): void {
@@ -48,6 +66,11 @@ final class ValidatorTest extends TestCase {
 	public function testCorpus(): void {
 		$this->assertEquals(
 			'phəˈkjuːliɚ',
+			( new Validator( 'pʰə̥ˈkj̊uːliɚ', true, true, true ) )->normalizedIPA
+		);
+
+		$this->assertNotEquals(
+			'pʰə̥ˈkj̊uːliɚ',
 			( new Validator( 'pʰə̥ˈkj̊uːliɚ', true, true, true ) )->normalizedIPA
 		);
 

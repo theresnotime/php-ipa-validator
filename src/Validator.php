@@ -14,6 +14,8 @@ namespace TheresNoTime\IPAValidator;
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
+use Exception;
+
 /**
  * IPA Validator class
  *
@@ -62,11 +64,11 @@ class Validator {
 	 * @return void
 	 */
 	public function __construct( $ipa, $strip = true, $normalize = false, $google = false ) {
-		$this->originalIPA = $ipa;
-		$this->normalizedIPA = $ipa;
-		$this->strip = $strip;
-		$this->normalize = $normalize;
-		$this->google = $google;
+		$this->originalIPA = strval( $ipa );
+		$this->normalizedIPA = strval( $ipa );
+		$this->strip = boolval( $strip );
+		$this->normalize = boolval( $normalize );
+		$this->google = boolval( $google );
 		$this->valid = boolval( $this->validate() );
 	}
 
@@ -90,7 +92,7 @@ class Validator {
 	 *
 	 * @return string
 	 */
-	private function normalize() {
+	private function normalizeIPA() {
 		if ( $this->strip ) {
 			$this->stripIPA();
 		}
@@ -100,6 +102,7 @@ class Validator {
 		 * and different from what anyone else will want.
 		 */
 		if ( $this->google ) {
+			/** @var string[] */
 			$charmap = [
 				[ '(', '' ],
 				[ ')', '' ],
@@ -122,6 +125,7 @@ class Validator {
 			}
 			$this->removeDiacritics();
 		} else {
+			/** @var string[] */
 			$charmap = [
 				[ "'", 'ˈ' ],
 				[ ':', 'ː' ],
@@ -157,10 +161,13 @@ class Validator {
 		}
 
 		if ( $this->normalize ) {
-			$this->normalize();
+			$this->normalizeIPA();
+		}
+
+		if ( $this->google && !$this->normalize ) {
+			throw new Exception( 'Google normalization being enabled also requires normalization to also be enabled' );
 		}
 
 		return preg_match( $this->ipaRegex, $this->normalizedIPA );
 	}
-
 }
