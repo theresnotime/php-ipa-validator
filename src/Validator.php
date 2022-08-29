@@ -7,7 +7,7 @@
  * @package   IPA Validator
  * @author    TheresNoTime <sam@theresnotime.co.uk>
  * @copyright 2022 TheresNoTime
- * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
+ * @license   https://opensource.org/licenses/GPL-3.0 GPL-2.0-or-later
  */
 declare( strict_types=1 );
 namespace TheresNoTime\IPAValidator;
@@ -21,7 +21,7 @@ use Exception;
  *
  * @package  IPA Validator
  * @author   TheresNoTime <sam@theresnotime.co.uk>
- * @license  https://opensource.org/licenses/GPL-3.0 GPL-3.0
+ * @license  https://opensource.org/licenses/GPL-3.0 GPL-2.0-or-later
  */
 class Validator {
 
