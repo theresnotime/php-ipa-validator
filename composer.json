@@ -2,7 +2,7 @@
     "name": "theresnotime/ipa-validator",
     "description": "Composer package for validating and normalizing IPA",
     "type": "library",
-    "license": "MIT",
+    "license": "GPL-2.0-or-later",
     "minimum-stability": "stable",
     "support": {
         "issues": "https://github.com/theresnotime/php-ipa-validator/issues"
