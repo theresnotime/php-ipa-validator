@@ -44,6 +44,6 @@
         ],
 		"phan": "./vendor/bin/phan -d . --long-progress-bar",
 		"phpcs": "./vendor/bin/phpcs -sp --cache",
-        "phpunit": "./vendor/bin/phpunit --colors=always -c phpunit.xml"
+        "phpunit": "./vendor/bin/phpunit --colors=always"
 	}
 }
