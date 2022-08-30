@@ -42,8 +42,8 @@
 			"minus-x check .",
 			"@phpunit"
 		],
-		"phan": "./vendor/bin/phan -d . --long-progress-bar",
-		"phpcs": "./vendor/bin/phpcs -sp --cache",
-		"phpunit": "./vendor/bin/phpunit --colors=always"
+		"phan": "phan -d . --long-progress-bar",
+		"phpcs": "phpcs -sp --cache",
+		"phpunit": "phpunit --colors=always"
 	}
 }
