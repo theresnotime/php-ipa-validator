@@ -2,8 +2,6 @@
 /**
  * IPA Validator class
  *
- * PHP version 7
- *
  * @package   IPA Validator
  * @author    TheresNoTime <sam@theresnotime.co.uk>
  * @copyright 2022 TheresNoTime
@@ -61,7 +59,6 @@ class Validator {
 	 * @param bool $strip Remove delimiters
 	 * @param bool $normalize Normalize IPA
 	 * @param bool $google Normalize IPA for Google TTS
-	 * @return void
 	 */
 	public function __construct( $ipa, $strip = true, $normalize = false, $google = false ) {
 		$this->originalIPA = strval( $ipa );
@@ -168,6 +165,6 @@ class Validator {
 			throw new Exception( 'Google normalization being enabled also requires normalization to also be enabled' );
 		}
 
-		return preg_match( $this->ipaRegex, $this->normalizedIPA );
+		return boolval( preg_match( $this->ipaRegex, $this->normalizedIPA ) );
 	}
 }
