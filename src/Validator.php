@@ -94,6 +94,17 @@ class Validator {
 			$this->stripIPA();
 		}
 
+		// Common normalizations
+		/** @var string[] */
+		$charmap = [
+			[ "'", 'ˈ' ],
+			[ ':', 'ː' ],
+			[ ',', 'ˌ' ],
+		];
+		foreach ( $charmap as $char ) {
+			$this->normalizedIPA = str_replace( $char[0], $char[1], $this->normalizedIPA );
+		}
+
 		/*
 		 * I'm going to guess Google's normalization is weird
 		 * and different from what anyone else will want.
@@ -103,9 +114,6 @@ class Validator {
 			$charmap = [
 				[ '(', '' ],
 				[ ')', '' ],
-				[ "'", 'ˈ' ],
-				[ ':', 'ː' ],
-				[ ',', 'ˌ' ],
 				// 207F
 				[ 'ⁿ', 'n' ],
 				// 02B0
@@ -121,16 +129,6 @@ class Validator {
 				$this->normalizedIPA = str_replace( $char[0], $char[1], $this->normalizedIPA );
 			}
 			$this->removeDiacritics();
-		} else {
-			/** @var string[] */
-			$charmap = [
-				[ "'", 'ˈ' ],
-				[ ':', 'ː' ],
-				[ ',', 'ˌ' ],
-			];
-			foreach ( $charmap as $char ) {
-				$this->normalizedIPA = str_replace( $char[0], $char[1], $this->normalizedIPA );
-			}
 		}
 
 		return $this->normalizedIPA;
