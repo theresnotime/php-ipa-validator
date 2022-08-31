@@ -43,7 +43,6 @@ When constructing a new `Validator`, you can set the following options:
  * @param bool $strip Remove delimiters
  * @param bool $normalize Normalize IPA
  * @param bool $google Normalize IPA for Google TTS
- * @return void
  */
 public function __construct( $ipa, $strip = true, $normalize = false, $google = false )
 ```
@@ -60,14 +59,18 @@ As part of a work project, we're feeding IPA to Google's TTS engine — Google i
 For example, the IPA `ˈɔːfɫ̩` would not render correctly in Google TTS. A custom charmap is used to normalize certain characters:
 ```php
 $charmap = [
-    [ "'", 'ˈ' ],
-    [ ':', 'ː' ],
-    [ ',', 'ˌ' ],
-    [ 'ⁿ', 'n' ], // 207F
-    [ 'ʰ', 'h' ], // 02B0
-    [ 'ɫ', 'l' ], // 026B
-    [ 'ˡ', 'l' ], // 02E1
-    [ 'ʲ', 'j' ], // 02B2
+    [ '(', '' ],
+    [ ')', '' ],
+    // 207F
+    [ 'ⁿ', 'n' ],
+    // 02B0
+    [ 'ʰ', 'h' ],
+    // 026B
+    [ 'ɫ', 'l' ],
+    // 02E1
+    [ 'ˡ', 'l' ],
+    // 02B2
+    [ 'ʲ', 'j' ],
 ];
 ```
 Setting `$google` to `true` also removes all diacritics from the IPA string.
