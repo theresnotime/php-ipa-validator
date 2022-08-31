@@ -1,13 +1,12 @@
 <?php
 declare( strict_types=1 );
-require_once __DIR__ . '/../vendor/autoload.php';
 use PHPUnit\Framework\TestCase;
 use TheresNoTime\IPAValidator\Validator;
 
+/**
+ * @covers TheresNoTime\IPAValidator\Validator
+ */
 final class ValidatorTest extends TestCase {
-	/**
-	 * @covers TheresNoTime\IPAValidator\Validator::__construct
-	 */
 	public function testCanBeCreatedFromIPA(): void {
 		$this->assertInstanceOf(
 			Validator::class,
@@ -15,16 +14,10 @@ final class ValidatorTest extends TestCase {
 		);
 	}
 
-	/**
-	 * @covers TheresNoTime\IPAValidator\Validator::validate
-	 */
 	public function testValidation(): void {
 		$this->assertTrue( ( new Validator( '/pʰə̥ˈkj̊uːliɚ/', true, true, true ) )->valid );
 	}
 
-	/**
-	 * @covers TheresNoTime\IPAValidator\Validator::normalize
-	 */
 	public function testNormalization(): void {
 		$this->assertEquals(
 			'phəˈkjuːliɚ',
@@ -32,17 +25,11 @@ final class ValidatorTest extends TestCase {
 		);
 	}
 
-	/**
-	 * @covers TheresNoTime\IPAValidator\Validator::validate
-	 */
 	public function testException(): void {
 		$this->expectException( Exception::class );
 		( new Validator( '/pʰə̥ˈkj̊uːliɚ/', false, false, true ) )->normalizedIPA;
 	}
 
-	/**
-	 * @covers TheresNoTime\IPAValidator\Validator::stripIPA
-	 */
 	public function testStripIPA(): void {
 		$this->assertEquals(
 			'pʰə̥ˈkj̊uːliɚ',
@@ -50,9 +37,6 @@ final class ValidatorTest extends TestCase {
 		);
 	}
 
-	/**
-	 * @covers TheresNoTime\IPAValidator\Validator
-	 */
 	public function testOriginalIPA(): void {
 		$this->assertEquals(
 			'/pʰə̥ˈkj̊uːliɚ/',
@@ -60,9 +44,6 @@ final class ValidatorTest extends TestCase {
 		);
 	}
 
-	/**
-	 * @covers TheresNoTime\IPAValidator\Validator
-	 */
 	public function testCorpus(): void {
 		$this->assertEquals(
 			'phəˈkjuːliɚ',

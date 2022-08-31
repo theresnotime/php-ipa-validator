@@ -2,8 +2,6 @@
 /**
  * IPA Validator class
  *
- * PHP version 7
- *
  * @package   IPA Validator
  * @author    TheresNoTime <sam@theresnotime.co.uk>
  * @copyright 2022 TheresNoTime
@@ -61,7 +59,6 @@ class Validator {
 	 * @param bool $strip Remove delimiters
 	 * @param bool $normalize Normalize IPA
 	 * @param bool $google Normalize IPA for Google TTS
-	 * @return void
 	 */
 	public function __construct( $ipa, $strip = true, $normalize = false, $google = false ) {
 		$this->originalIPA = strval( $ipa );
@@ -97,6 +94,17 @@ class Validator {
 			$this->stripIPA();
 		}
 
+		// Common normalizations
+		/** @var string[] */
+		$charmap = [
+			[ "'", 'ˈ' ],
+			[ ':', 'ː' ],
+			[ ',', 'ˌ' ],
+		];
+		foreach ( $charmap as $char ) {
+			$this->normalizedIPA = str_replace( $char[0], $char[1], $this->normalizedIPA );
+		}
+
 		/*
 		 * I'm going to guess Google's normalization is weird
 		 * and different from what anyone else will want.
@@ -106,9 +114,6 @@ class Validator {
 			$charmap = [
 				[ '(', '' ],
 				[ ')', '' ],
-				[ "'", 'ˈ' ],
-				[ ':', 'ː' ],
-				[ ',', 'ˌ' ],
 				// 207F
 				[ 'ⁿ', 'n' ],
 				// 02B0
@@ -124,16 +129,6 @@ class Validator {
 				$this->normalizedIPA = str_replace( $char[0], $char[1], $this->normalizedIPA );
 			}
 			$this->removeDiacritics();
-		} else {
-			/** @var string[] */
-			$charmap = [
-				[ "'", 'ˈ' ],
-				[ ':', 'ː' ],
-				[ ',', 'ˌ' ],
-			];
-			foreach ( $charmap as $char ) {
-				$this->normalizedIPA = str_replace( $char[0], $char[1], $this->normalizedIPA );
-			}
 		}
 
 		return $this->normalizedIPA;
@@ -168,6 +163,6 @@ class Validator {
 			throw new Exception( 'Google normalization being enabled also requires normalization to also be enabled' );
 		}
 
-		return preg_match( $this->ipaRegex, $this->normalizedIPA );
+		return boolval( preg_match( $this->ipaRegex, $this->normalizedIPA ) );
 	}
 }
