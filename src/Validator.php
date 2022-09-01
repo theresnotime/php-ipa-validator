@@ -10,8 +10,6 @@
 declare( strict_types=1 );
 namespace TheresNoTime\IPAValidator;
 
-require_once __DIR__ . '/../vendor/autoload.php';
-
 use Exception;
 
 /**
