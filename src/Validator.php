@@ -58,13 +58,13 @@ EOD;
 	 * @param bool $normalize Normalize IPA
 	 * @param bool $google Normalize IPA for Google TTS
 	 */
-	public function __construct( $ipa, $strip = true, $normalize = false, $google = false ) {
-		$this->originalIPA = strval( $ipa );
-		$this->normalizedIPA = strval( $ipa );
-		$this->strip = boolval( $strip );
-		$this->normalize = boolval( $normalize );
-		$this->google = boolval( $google );
-		$this->valid = boolval( $this->validate() );
+	public function __construct( string $ipa, bool $strip = true, bool $normalize = false, bool $google = false ) {
+		$this->originalIPA = $ipa;
+		$this->normalizedIPA = $ipa;
+		$this->strip = $strip;
+		$this->normalize = $normalize;
+		$this->google = $google;
+		$this->valid = $this->validate();
 	}
 
 	/**
@@ -72,7 +72,7 @@ EOD;
 	 *
 	 * @return string
 	 */
-	private function removeDiacritics() {
+	private function removeDiacritics(): string {
 		if ( $this->strip ) {
 			$this->stripIPA();
 		}
@@ -87,7 +87,7 @@ EOD;
 	 *
 	 * @return string
 	 */
-	private function normalizeIPA() {
+	private function normalizeIPA(): string {
 		if ( $this->strip ) {
 			$this->stripIPA();
 		}
@@ -137,7 +137,7 @@ EOD;
 	 *
 	 * @return string
 	 */
-	private function stripIPA() {
+	private function stripIPA(): string {
 		$this->normalizedIPA = preg_replace( $this->stripRegex, '', $this->normalizedIPA );
 
 		return $this->normalizedIPA;
@@ -148,7 +148,7 @@ EOD;
 	 *
 	 * @return bool
 	 */
-	private function validate() {
+	private function validate(): bool {
 		if ( $this->strip ) {
 			$this->stripIPA();
 		}
